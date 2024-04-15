@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.9.34607.119
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChatApp", "ChatApp\ChatApp.csproj", "{643067D4-6BD2-43D1-9B77-D92EF67355E6}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Debug|ARM64 = Debug|ARM64
+		Release|Any CPU = Release|Any CPU
+		Release|ARM64 = Release|ARM64
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{643067D4-6BD2-43D1-9B77-D92EF67355E6}.Debug|Any CPU.ActiveCfg = Debug|ARM64
+		{643067D4-6BD2-43D1-9B77-D92EF67355E6}.Debug|Any CPU.Build.0 = Debug|ARM64
+		{643067D4-6BD2-43D1-9B77-D92EF67355E6}.Debug|ARM64.ActiveCfg = Debug|ARM64
+		{643067D4-6BD2-43D1-9B77-D92EF67355E6}.Debug|ARM64.Build.0 = Debug|ARM64
+		{643067D4-6BD2-43D1-9B77-D92EF67355E6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{643067D4-6BD2-43D1-9B77-D92EF67355E6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{643067D4-6BD2-43D1-9B77-D92EF67355E6}.Release|ARM64.ActiveCfg = Release|ARM64
+		{643067D4-6BD2-43D1-9B77-D92EF67355E6}.Release|ARM64.Build.0 = Release|ARM64
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {1736AAF9-F96F-4E82-9CDD-874173A7626E}
+	EndGlobalSection
+EndGlobal
