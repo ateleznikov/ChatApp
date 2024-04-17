@@ -55,6 +55,11 @@ namespace ChatApp
                     }
                 }
             }
+            if (ChatListBox.Items.Count > 0)
+            {
+                object lastItem = ChatListBox.Items[ChatListBox.Items.Count - 1];
+                ChatListBox.ScrollIntoView(lastItem);
+            }
         }
 
         private void SendButton_Click(object sender, RoutedEventArgs e)
@@ -89,11 +94,18 @@ namespace ChatApp
             };
             if (string.IsNullOrWhiteSpace(message))
             {
+                // Does not allow to send empty messages and spaces
                 return;
             }
             File.AppendAllText(ChatFilePath, chatMessage.ToString() + Environment.NewLine);
             ChatListBox.Items.Add(chatMessage);
             ChatInputTextBox.Clear();
+            if (ChatListBox.Items.Count > 0)
+            {
+                // This if scrolls to the bottom of the Lisbox when the new message is added
+                object lastItem = ChatListBox.Items[ChatListBox.Items.Count - 1];
+                ChatListBox.ScrollIntoView(lastItem);
+            }
         }
         
 

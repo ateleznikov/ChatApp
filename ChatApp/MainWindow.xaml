@@ -54,24 +54,24 @@
             
             <Border Grid.Row="1" BorderBrush="Black" BorderThickness="0.1" VerticalAlignment="Top" />
             <Border Grid.Row="1" BorderBrush="Black" BorderThickness="0.1" VerticalAlignment="Bottom" />
-            <ListBox x:Name="ChatListBox" Grid.Row="1" BorderThickness="0" Margin="5" ItemsSource="{Binding ChatMessages}" >
+            <ListBox x:Name="ChatListBox" Grid.Row="1" BorderThickness="0" Margin="5" ItemsSource="{Binding ChatMessages}" Background="Transparent" >
                 <ListBox.ItemContainerStyle>
-                        <Style TargetType="ListBoxItem">
-                            <Setter Property="IsHitTestVisible" Value="False" />
-                        </Style>
-                    </ListBox.ItemContainerStyle>
-                    <ListBox.ItemTemplate>
-                        <DataTemplate>
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="580" />
-                                    <ColumnDefinition Width="auto" />
-                                </Grid.ColumnDefinitions>
-                                <TextBlock Text="{Binding Message}" TextWrapping="Wrap" Grid.Column="0" />
-                                <TextBlock Text="{Binding Timestamp, StringFormat='{}{0:HH:mm}'}" TextWrapping="Wrap" FontSize="10" Foreground="Gray" Grid.Column="1" Margin="5,0,0,0" HorizontalAlignment="Right" VerticalAlignment="Center" />
-                            </Grid>
-                        </DataTemplate>
-                    </ListBox.ItemTemplate>
+                    <Style TargetType="ListBoxItem">
+                        <Setter Property="IsHitTestVisible" Value="False" />
+                    </Style>
+                </ListBox.ItemContainerStyle>
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="580" />
+                                <ColumnDefinition Width="auto" />
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Text="{Binding Message}" TextWrapping="Wrap" Grid.Column="0" />
+                            <TextBlock Text="{Binding Timestamp, StringFormat='{}{0:HH:mm}'}" TextWrapping="Wrap" FontSize="10" Foreground="Gray" Grid.Column="1" Margin="5,0,0,0" HorizontalAlignment="Right" VerticalAlignment="Center" />
+                        </Grid>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
             </ListBox>
 
 
