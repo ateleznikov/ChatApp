@@ -7,16 +7,7 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="709" Width="1260">
     <Window.Resources>
-        <Style TargetType="TextBlock">
-            <Setter Property="Foreground" Value="#d2d2d5" />
-            <!-- Default font color -->
-            <Style.Triggers>
-                <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=IsSelected}" Value="True">
-                    <Setter Property="Foreground" Value="Red" />
-                    <!-- Selected font color -->
-                </DataTrigger>
-            </Style.Triggers>
-        </Style>
+        <ResourceDictionary Source="Styles\styles.xaml"/>
     </Window.Resources>
     <Grid >
 
@@ -37,15 +28,22 @@
                 <RowDefinition Height="78*"/>
             </Grid.RowDefinitions>
 
-            <Button Content="&#x1F4EA;" Foreground="White" Background="Transparent" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="45"/>
-            <Button Content="&#x1F464;" Foreground="White" Background="Transparent" Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="45"/>
+            <Button Content="&#x1F4EA;" Grid.Row="1" Style="{StaticResource MenuButton}"/>
+            <Button Content="&#x1F464;" Grid.Row="2" Style="{StaticResource MenuButton}"/>
         </Grid>
         <Grid Grid.Column="1"  Background="#3e3e42">
             <Border BorderBrush="Black" BorderThickness="0.1" VerticalAlignment="Bottom"/>
             <Grid.RowDefinitions>
-                <RowDefinition Height="75.16*"/>
-                <RowDefinition Height="620*"/>
+                <RowDefinition Height="73*"/>
+                <RowDefinition Height="531*"/>
+                <RowDefinition Height="74.7"/>
             </Grid.RowDefinitions>
+
+            <!--<ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
+                <ListBox x:Name="Contacts" BorderThickness="0" Margin="5" Background="SteelBlue"/>
+
+            </ScrollViewer>-->
+
         </Grid>
         <Grid Grid.Column="2" Background="#d2d2d5">
             <Grid.RowDefinitions>
@@ -56,9 +54,8 @@
             
             <Border Grid.Row="1" BorderBrush="Black" BorderThickness="0.1" VerticalAlignment="Top" />
             <Border Grid.Row="1" BorderBrush="Black" BorderThickness="0.1" VerticalAlignment="Bottom" />
-            <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
-                <ListBox x:Name="ChatListBox" BorderThickness="0" Margin="5" ItemsSource="{Binding ChatMessages}">
-                    <ListBox.ItemContainerStyle>
+            <ListBox x:Name="ChatListBox" Grid.Row="1" BorderThickness="0" Margin="5" ItemsSource="{Binding ChatMessages}" >
+                <ListBox.ItemContainerStyle>
                         <Style TargetType="ListBoxItem">
                             <Setter Property="IsHitTestVisible" Value="False" />
                         </Style>
@@ -75,8 +72,8 @@
                             </Grid>
                         </DataTemplate>
                     </ListBox.ItemTemplate>
-                </ListBox>
-            </ScrollViewer>
+            </ListBox>
+
 
             <DockPanel Grid.Row="2" LastChildFill="True" Margin="5">
                 <TextBox x:Name="ChatInputTextBox" DockPanel.Dock="Left" Margin="0,0,5,0" Width="555" KeyDown="ChatInputTextBox_KeyDown"/>

@@ -27,18 +27,8 @@ namespace ChatApp
             InitializeComponent();
             LoadChatHistory();
         }
-        private const string ChatFilePath = "\\\\Mac\\Home\\Documents\\ChatApp\\ChatApp\\history.txt";
-        /*private void LoadChatHistory()
-        {
-            if (File.Exists(ChatFilePath))
-            {
-                string[] messages = File.ReadAllLines(ChatFilePath);
-                foreach (string message in messages)
-                {
-                    ChatListBox.Items.Add(message);
-                }
-            }
-        }*/
+        private const string ChatFilePath = "C:\\Users\\S00240505\\Downloads\\ChatApp\\ChatApp\\history.txt";
+
         public void LoadChatHistory()
         {
             if (File.Exists(ChatFilePath))
@@ -85,22 +75,11 @@ namespace ChatApp
                 SendMessage();
             }
         }
-        /* private void SendMessage()
-         {
-             string message = ChatInputTextBox.Text.Trim();
-             if (!string.IsNullOrEmpty(message))
-             {
-                  DateTime now = DateTime.Now;
-                  string timestamp = now.ToString("HH:mm");
-                  string fullMessage = $"[{timestamp}] {message}";
-                  File.AppendAllText(ChatFilePath, fullMessage + Environment.NewLine);
-                  ChatListBox.Items.Add(fullMessage);
-                  ChatInputTextBox.Clear();
 
-             }
-         }*/
         public void SendMessage()
         {
+
+
             string message = ChatInputTextBox.Text.Trim();
             DateTime now = DateTime.Now;
             ChatMessage chatMessage = new ChatMessage
@@ -108,10 +87,15 @@ namespace ChatApp
                 Timestamp = now,
                 Message = message
             };
-
+            if (string.IsNullOrWhiteSpace(message))
+            {
+                return;
+            }
             File.AppendAllText(ChatFilePath, chatMessage.ToString() + Environment.NewLine);
             ChatListBox.Items.Add(chatMessage);
             ChatInputTextBox.Clear();
         }
+        
+
     }
 }
