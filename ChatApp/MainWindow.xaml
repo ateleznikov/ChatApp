@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ChatApp"
         mc:Ignorable="d"
-        Title="MainWindow" Height="709" Width="1260">
+        Title="MainWindow" Height="709" Width="1032">
     <Window.Resources>
         <ResourceDictionary Source="Styles\styles.xaml"/>
     </Window.Resources>
@@ -15,8 +15,6 @@
             <ColumnDefinition Width="115"/>
             <ColumnDefinition Width="276*"/>
             <ColumnDefinition Width="641*"/>
-
-            <ColumnDefinition Width="228*"/>
         </Grid.ColumnDefinitions>
 
         <Grid  Background="#2d2d30">
@@ -31,7 +29,7 @@
 
             <Button x:Name="ChatButton" Content="&#x1F4EA;" Grid.Row="1" Style="{StaticResource MenuButton}" Click="Main" />
             <Button x:Name="ProfileButton" Content="&#x1F464;" Grid.Row="2" Style="{StaticResource MenuButton}" Click="Profile"/>
-            
+            <Image Grid.Row="0" Source="{Binding ProfilePicture}" Width="100" Height="100" Margin="0,5"/>
         </Grid>
         <Grid Grid.Column="1"  Background="#3e3e42">
             <Border BorderBrush="Black" BorderThickness="0.1" VerticalAlignment="Bottom"/>
@@ -46,15 +44,7 @@
         </Grid>
         <Frame x:Name="Pages" Grid.Column="2" NavigationUIVisibility="Hidden"/>
 
-        <Grid Grid.Column="3"  Background="#d2d2d5">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="252*"/>
-                <RowDefinition Height="78*"/>
-                <RowDefinition Height="78*"/>
-                <RowDefinition Height="78*"/>
-                <RowDefinition Height="227*"/>
-            </Grid.RowDefinitions>
-        </Grid>
+        
         
     </Grid>
 </Window>
