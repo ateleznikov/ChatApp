@@ -12,33 +12,40 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Data.Entity;
 
 namespace ChatApp.Frames
 {
     /// <summary>
     /// Interaction logic for ProfileDetails.xaml
     /// </summary>
+    /// 
+
     public partial class ProfileDetails : Page
     {
+        private ContactsData db = new ContactsData();
+
         public ProfileDetails()
         {
             InitializeComponent();
-            LoadData();
+            LoadProfileData();
         }
 
-        private void LoadData()
+        private void LoadProfileData()
         {
-            Profile profile = new Profile();
-            profile.Name = "John";
-            profile.Surname = "Doe";
-            profile.BIO = "Hello, I am John Doe";
-            profile.ProfilePicture = "C:\\ATU\\VS files\\ChatApp\\ChatApp\\images\\profile-picture.jpg";
+            int profileId = 1;
 
-            // Set the DataContext of the page to the profile object
-            this.DataContext = profile;
+            var profile = db.Profiles
+                .Include(p => p.User)
+                .FirstOrDefault(p => p.Id == profileId);
 
-            
-          
+            if (profile != null)
+            {
+                ImageBlock.Source = new BitmapImage(new Uri(profile.ProfilePicture, UriKind.RelativeOrAbsolute));
+                NameBlock.Text = profile.Name;
+                SurnameBlock.Text = profile.Surname;
+                BioBlock.Text = profile.BIO;
+            }
         }
 
     }

@@ -8,42 +8,60 @@
       d:DesignHeight="450" d:DesignWidth="800"
       Title="MainFrame">
 
-    <Grid Grid.Column="2" Background="#d2d2d5">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="73*"/>
-            <RowDefinition Height="531*"/>
-            <RowDefinition Height="73*"/>
-        </Grid.RowDefinitions>
-
-        <Border Grid.Row="1" BorderBrush="Black" BorderThickness="0.1" VerticalAlignment="Top" />
-        <Border Grid.Row="1" BorderBrush="Black" BorderThickness="0.1" VerticalAlignment="Bottom" />
-        <Frame x:Name="MainPage" Grid.Row="1" />
-
-
-        <ListBox x:Name="ChatListBox" Grid.Row="1" BorderThickness="0" Margin="5, 0, 0, 0" ItemsSource="{Binding ChatMessages}" Background="Transparent" >
-            <ListBox.ItemContainerStyle>
-                <Style TargetType="ListBoxItem">
-                    <Setter Property="IsHitTestVisible" Value="False" />
-                </Style>
-            </ListBox.ItemContainerStyle>
-            <ListBox.ItemTemplate>
-                <DataTemplate>
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="580" />
-                            <ColumnDefinition Width="auto" />
-                        </Grid.ColumnDefinitions>
-                        <TextBlock Text="{Binding Message}" TextWrapping="Wrap" Grid.Column="0" />
-                        <TextBlock Text="{Binding Timestamp, StringFormat='{}{0:HH:mm}'}" TextWrapping="Wrap" FontSize="10" Foreground="Gray" Grid.Column="1" Margin="5,0,0,0" HorizontalAlignment="Right" VerticalAlignment="Center" />
-                    </Grid>
-                </DataTemplate>
-            </ListBox.ItemTemplate>
-        </ListBox>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition Width="4*"/>
+        </Grid.ColumnDefinitions>
+        <Grid Grid.Column="0"  Background="#3e3e42">
+            <ComboBox x:Name="ContactsComboBox" Grid.Row="0"/>
+            <Border BorderBrush="Black" BorderThickness="0.1" VerticalAlignment="Bottom"/>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="73*"/>
+                <RowDefinition Height="531*"/>
+                <RowDefinition Height="74.7"/>
+            </Grid.RowDefinitions>
+        </Grid>
+        <Grid Grid.Column="1" Background="#d2d2d5">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="73*"/>
+                <RowDefinition Height="531*"/>
+                <RowDefinition Height="73*"/>
+            </Grid.RowDefinitions>
 
 
-        <DockPanel Grid.Row="2" LastChildFill="True" Margin="5">
-            <TextBox x:Name="ChatInputTextBox" DockPanel.Dock="Left" Margin="0,0,5,0" Width="555" KeyDown="ChatInputTextBox_KeyDown"/>
-            <Button x:Name="SendButton" DockPanel.Dock="Right" Content="Send"  Click="SendButton_Click"/>
-        </DockPanel>
+            <Border Grid.Row="1" BorderBrush="Black" BorderThickness="0.1" VerticalAlignment="Top" />
+            <Border Grid.Row="1" BorderBrush="Black" BorderThickness="0.1" VerticalAlignment="Bottom" />
+            <Frame x:Name="MainPage" Grid.Row="1" />
+
+
+            <ListBox x:Name="ChatListBox" Grid.Row="1" BorderThickness="0" Margin="5, 0, 0, 0" ItemsSource="{Binding ChatMessages}" Background="Transparent" >
+                <ListBox.ItemContainerStyle>
+                    <Style TargetType="ListBoxItem">
+                        <Setter Property="IsHitTestVisible" Value="False" />
+                    </Style>
+                </ListBox.ItemContainerStyle>
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="580" />
+                                <ColumnDefinition Width="auto" />
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Text="{Binding Message}" TextWrapping="Wrap" Grid.Column="0" />
+                            <TextBlock Text="{Binding Timestamp, StringFormat='{}{0:HH:mm}'}" TextWrapping="Wrap" FontSize="10" Foreground="Gray" Grid.Column="1" Margin="5,0,0,0" HorizontalAlignment="Right" VerticalAlignment="Center" />
+                        </Grid>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+
+
+            <DockPanel Grid.Row="2" LastChildFill="True" Margin="5">
+                <TextBox x:Name="ChatInputTextBox" DockPanel.Dock="Left" Margin="0,0,5,0" Width="555" KeyDown="ChatInputTextBox_KeyDown"/>
+                <Button x:Name="SendButton" DockPanel.Dock="Right" Content="Send"  Click="SendButton_Click"/>
+            </DockPanel>
+
+        </Grid>
     </Grid>
+    
 </Page>

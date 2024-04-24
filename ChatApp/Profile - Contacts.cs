@@ -28,6 +28,12 @@ namespace ChatApp
         public string ProfilePicture { get; set; }
         public int UserId { get; set; }
         public User User { get; set; }
+        public virtual ICollection<Contacts> Contacts { get; set; }
+
+        public Profile()
+        {
+            Contacts = new List<Contacts>();
+        }
     }
 
     public class ChatMessageV2
@@ -75,9 +81,11 @@ namespace ChatApp
                 .HasForeignKey(p => p.UserId);
 
             modelBuilder.Entity<Contacts>()
-                .HasRequired(c => c.Profile)
+                .HasRequired(c => c.RelatedContact)
                 .WithMany()
-                .HasForeignKey(c => c.ProfileId);
+                .HasForeignKey(c => c.RelatedContactId)
+                .WillCascadeOnDelete(false);
+
 
             modelBuilder.Entity<Contacts>()
                 .HasRequired(c => c.RelatedContact)
