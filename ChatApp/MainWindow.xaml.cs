@@ -25,13 +25,17 @@ namespace ChatApp
         public MainWindow()
         {
             InitializeComponent();
+
         }
-        
 
         private void Main(object sender, RoutedEventArgs e)
         {
-            MainPage.Content = new Frames.MainFrame();
+            Pages.Content = new Frames.MainFrame();
         }
 
+        private void Profile(object sender, RoutedEventArgs e)
+        {
+            Pages.Content = new Frames.ProfileDetails();
+        }
     }
 }

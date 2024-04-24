@@ -26,8 +26,9 @@ namespace ChatApp.Frames
         {
             InitializeComponent();
             LoadChatHistory();
+
         }
-        private const string ChatFilePath = "C:\\ChatApp\\ChatApp\\history.txt";
+        private const string ChatFilePath = "C:\\ATU\\vs files\\ChatApp\\ChatApp\\history.txt";
 
         public void LoadChatHistory()
         {
@@ -107,5 +108,7 @@ namespace ChatApp.Frames
                 ChatListBox.ScrollIntoView(lastItem);
             }
         }
+        
+
     }
 }

@@ -9,7 +9,7 @@
     <Window.Resources>
         <ResourceDictionary Source="Styles\styles.xaml"/>
     </Window.Resources>
-    <Grid >
+    <Grid>
 
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="115"/>
@@ -29,8 +29,8 @@
                 <RowDefinition Height="78*"/>
             </Grid.RowDefinitions>
 
-            <Button Content="&#x1F4EA;" Grid.Row="1" Style="{StaticResource MenuButton}" Click="Main" />
-            <Button Content="&#x1F464;" Grid.Row="2" Style="{StaticResource MenuButton}"/>
+            <Button x:Name="ChatButton" Content="&#x1F4EA;" Grid.Row="1" Style="{StaticResource MenuButton}" Click="Main" />
+            <Button x:Name="ProfileButton" Content="&#x1F464;" Grid.Row="2" Style="{StaticResource MenuButton}" Click="Profile"/>
             
         </Grid>
         <Grid Grid.Column="1"  Background="#3e3e42">
@@ -44,8 +44,8 @@
            
 
         </Grid>
-        <Frame x:Name="MainPage" Grid.Column="2" />
-        
+        <Frame x:Name="Pages" Grid.Column="2" NavigationUIVisibility="Hidden"/>
+
         <Grid Grid.Column="3"  Background="#d2d2d5">
             <Grid.RowDefinitions>
                 <RowDefinition Height="252*"/>
