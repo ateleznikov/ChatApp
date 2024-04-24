@@ -20,7 +20,7 @@
         <Frame x:Name="MainPage" Grid.Row="1" />
 
 
-        <ListBox x:Name="ChatListBox" Grid.Row="1" BorderThickness="0" Margin="5" ItemsSource="{Binding ChatMessages}" Background="Transparent" >
+        <ListBox x:Name="ChatListBox" Grid.Row="1" BorderThickness="0" Margin="5, 0, 0, 0" ItemsSource="{Binding ChatMessages}" Background="Transparent" >
             <ListBox.ItemContainerStyle>
                 <Style TargetType="ListBoxItem">
                     <Setter Property="IsHitTestVisible" Value="False" />

@@ -28,7 +28,7 @@ namespace ChatApp.Frames
             LoadChatHistory();
 
         }
-        private const string ChatFilePath = "C:\\ChatApp\\ChatApp\\history.txt";
+        private const string ChatFilePath = "C:\\ATU\\VS files\\ChatApp\\ChatApp\\history.txt";
 
         public void LoadChatHistory()
         {

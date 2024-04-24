@@ -32,7 +32,7 @@ namespace ChatApp.Frames
             profile.Name = "John";
             profile.Surname = "Doe";
             profile.BIO = "Hello, I am John Doe";
-            profile.ProfilePicture = "C:\\ChatApp\\ChatApp\\images\\profile-picture.jpg";
+            profile.ProfilePicture = "C:\\ATU\\VS files\\ChatApp\\ChatApp\\images\\profile-picture.jpg";
 
             // Set the DataContext of the page to the profile object
             this.DataContext = profile;

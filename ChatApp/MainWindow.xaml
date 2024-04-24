@@ -5,7 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ChatApp"
         mc:Ignorable="d"
-        Title="MainWindow" Height="709" Width="1032">
+        Title="MainWindow" Height="709" Width="1032"
+        ResizeMode="NoResize">
     <Window.Resources>
         <ResourceDictionary Source="Styles\styles.xaml"/>
     </Window.Resources>
