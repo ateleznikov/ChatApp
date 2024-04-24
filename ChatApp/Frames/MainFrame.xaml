@@ -14,7 +14,7 @@
             <ColumnDefinition Width="4*"/>
         </Grid.ColumnDefinitions>
         <Grid Grid.Column="0"  Background="#3e3e42">
-            <ComboBox x:Name="ContactsComboBox" Grid.Row="0"/>
+            <ListBox x:Name="ContactsListBox" Grid.Row="1" Margin="5" Background="Transparent" SelectionChanged="ContactsListBox_SelectionChanged" ItemsSource="{Binding Contacts}" DisplayMemberPath="Name" />
             <Border BorderBrush="Black" BorderThickness="0.1" VerticalAlignment="Bottom"/>
             <Grid.RowDefinitions>
                 <RowDefinition Height="73*"/>

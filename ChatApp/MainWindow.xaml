@@ -31,18 +31,8 @@
             <Button x:Name="ProfileButton" Content="&#x1F464;" Grid.Row="2" Style="{StaticResource MenuButton}" Click="Profile"/>
             <Image Grid.Row="0" Source="{Binding ProfilePicture}" Width="100" Height="100" Margin="0,5"/>
         </Grid>
-        
-        <Frame x:Name="Pages" Grid.Column="2" NavigationUIVisibility="Hidden"/>
 
-        <!--<Grid Grid.Column="1"  Background="#3e3e42">
-            <ComboBox x:Name="ContactsComboBox" Grid.Row="0"/>
-            <Border BorderBrush="Black" BorderThickness="0.1" VerticalAlignment="Bottom"/>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="73*"/>
-                <RowDefinition Height="531*"/>
-                <RowDefinition Height="74.7"/>
-            </Grid.RowDefinitions>
-        </Grid>-->
+        <Frame x:Name="Pages" Grid.Column="2" NavigationUIVisibility="Hidden"/>
 
     </Grid>
 </Window>
