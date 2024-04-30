@@ -15,48 +15,49 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.IO;
 using System.Data.Entity;
+using System.Runtime.Remoting.Contexts;
 
 namespace ChatApp.Frames
 {
-    /// <summary>
-    /// Interaction logic for MainFrame.xaml
-    /// </summary>
-
-
     public partial class MainFrame : Page
     {
-        private ContactsData _db;
+        private ChatAppContext db;
 
         public MainFrame()
         {
             InitializeComponent();
-            _db = new ContactsData();
-            LoadChatHistory();
+            db = new ChatAppContext();
             LoadContacts();
+            LoadChatHistory();
         }
+
         private void ContactsListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             LoadChatHistory();
         }
-        public void LoadContacts()
+
+        private void LoadContacts()
         {
-            var contacts = _db.Contacts.Include(c => c.Profile).ToList();
+            var contacts = db.Contacts.ToList();
             ContactsListBox.ItemsSource = contacts;
         }
-        public void LoadChatHistory()
-        {
-            ChatListBox.Items.Clear(); // Clear existing items
 
-            var selectedContact = (Contacts)ContactsListBox.SelectedItem;
+        private void LoadChatHistory()
+        {
+            Console.WriteLine("LoadChatHistory called");
+
+            ChatListBox.Items.Clear();
+
+            var selectedContact = (Contact)ContactsListBox.SelectedItem;
             if (selectedContact == null)
             {
-                // No contact selected, return or show an error message
+                Console.WriteLine("No contact selected");
                 return;
             }
 
-            var chatMessages = _db.ChatMessages
-                .Include(cm => cm.Contact)
+            var chatMessages = db.ChatMessages
                 .Where(cm => cm.ContactId == selectedContact.Id)
+                .OrderBy(cm => cm.MessageTimestamp)
                 .ToList();
 
             foreach (var chatMessage in chatMessages)
@@ -71,52 +72,50 @@ namespace ChatApp.Frames
             }
         }
 
+
         private void SendButton_Click(object sender, RoutedEventArgs e)
         {
             SendMessage();
         }
 
-        private void ChatInputTextBox_KeyDown(object sender, KeyEventArgs e)
+        private void ChatInputTextBox_KeyDown(object sender, System.Windows.Input.KeyEventArgs e)
         {
-            if (e.Key == Key.Enter && Keyboard.Modifiers == ModifierKeys.Shift)
+            if (e.Key == System.Windows.Input.Key.Enter && Keyboard.Modifiers == System.Windows.Input.ModifierKeys.Shift)
             {
                 ChatInputTextBox.Text += Environment.NewLine;
                 ChatInputTextBox.CaretIndex = ChatInputTextBox.Text.Length;
                 e.Handled = true;
             }
-            else if (e.Key == Key.Enter)
+            else if (e.Key == System.Windows.Input.Key.Enter)
             {
                 SendMessage();
             }
         }
 
-        public void SendMessage()
+        private void SendMessage()
         {
             string message = ChatInputTextBox.Text.Trim();
             DateTime now = DateTime.Now;
 
-            var selectedContact = (Contacts)ContactsListBox.SelectedItem;
+            var selectedContact = (Contact)ContactsListBox.SelectedItem;
             if (selectedContact == null)
             {
                 MessageBox.Show("Please select a contact.");
                 return;
             }
 
-            var chatMessage = new ChatMessageV2
+            if (string.IsNullOrWhiteSpace(message))
+                return;
+
+            var chatMessage = new ChatMessage
             {
                 ContactId = selectedContact.Id,
-                Message = message,
-                Timestamp = now
+                MessageText = message,
+                MessageTimestamp = now
             };
 
-            if (string.IsNullOrWhiteSpace(message))
-            {
-                // Does not allow to send empty messages and spaces
-                return;
-            }
-
-            _db.ChatMessages.Add(chatMessage);
-            _db.SaveChanges();
+            db.ChatMessages.Add(chatMessage);
+            db.SaveChanges();
 
             ChatListBox.Items.Add(chatMessage);
             ChatInputTextBox.Clear();
@@ -126,6 +125,16 @@ namespace ChatApp.Frames
                 object lastItem = ChatListBox.Items[ChatListBox.Items.Count - 1];
                 ChatListBox.ScrollIntoView(lastItem);
             }
+        }
+        void OpenNewContactWindow(object sender, RoutedEventArgs e)
+        {
+            var newContactWindow = new NewContactWindow();
+            newContactWindow.ShowDialog();
+        }
+        private void RefreshContactsList()
+        {
+            var contacts = db.Contacts.ToList();
+            ContactsListBox.ItemsSource = contacts;
         }
     }
 }

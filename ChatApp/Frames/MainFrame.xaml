@@ -22,6 +22,7 @@
         <Grid Grid.Column="0"  Background="#3e3e42">
             <ListBox x:Name="ContactsListBox" ItemTemplate="{StaticResource ContactTemplate}" Grid.Row="1" Margin="5" Background="Transparent" BorderBrush="Transparent"  SelectionChanged="ContactsListBox_SelectionChanged" ItemsSource="{Binding Contacts}"/>
             <Border BorderBrush="Black" BorderThickness="0.1" VerticalAlignment="Bottom"/>
+            <Button x:Name="AddCont" Grid.Row="2" Margin="20" Content="Add New Contact" Click="OpenNewContactWindow"/>
             <Grid.RowDefinitions>
                 <RowDefinition Height="73*"/>
                 <RowDefinition Height="531*"/>
@@ -41,7 +42,7 @@
             <Frame x:Name="MainPage" Grid.Row="1" />
 
 
-            <ListBox x:Name="ChatListBox" Grid.Row="1" BorderThickness="0" Margin="5, 0, 0, 0" ItemsSource="{Binding ChatMessages}" Background="Transparent" >
+            <ListBox x:Name="ChatListBox" Grid.Row="1" BorderThickness="0" Margin="5, 0, 0, 0" ItemsSource="{Binding}" Background="Transparent">
                 <ListBox.ItemContainerStyle>
                     <Style TargetType="ListBoxItem">
                         <Setter Property="IsHitTestVisible" Value="False" />
@@ -54,8 +55,8 @@
                                 <ColumnDefinition Width="580" />
                                 <ColumnDefinition Width="auto" />
                             </Grid.ColumnDefinitions>
-                            <TextBlock Text="{Binding Message}" TextWrapping="Wrap" Grid.Column="0" />
-                            <TextBlock Text="{Binding Timestamp, StringFormat='{}{0:HH:mm}'}" TextWrapping="Wrap" FontSize="10" Foreground="Gray" Grid.Column="1" Margin="5,0,0,0" HorizontalAlignment="Right" VerticalAlignment="Center" />
+                            <TextBlock Text="{Binding MessageText}" TextWrapping="Wrap" Grid.Column="0" />
+                            <TextBlock Text="{Binding MessageTimestamp, StringFormat='{}{0:HH:mm}'}" TextWrapping="Wrap" FontSize="10" Foreground="Gray" Grid.Column="1" Margin="5,0,0,0" HorizontalAlignment="Right" VerticalAlignment="Center" />
                         </Grid>
                     </DataTemplate>
                 </ListBox.ItemTemplate>

@@ -13,58 +13,43 @@ namespace DBCreation
     {
         static void Main(string[] args)
         {
-            using (var db = new ContactsData())
+            // Create the database if it doesn't exist
+           using (var db = new ChatAppContext())
             {
-                var user = new User
-                {
-                    Username = "john_doe",
-                    Password = "password"
-                };
-
                 var profile = new Profile
                 {
                     Name = "John",
                     Surname = "Doe",
-                    BIO = "Hello, I'm John Doe!",
-                    ProfilePicture = "profile_picture.jpg",
-                    User = user
+                    Bio = "Hello, I'm John Doe!",
+                    ProfilePicture = "profile_picture.jpg"
                 };
 
-                var contact1 = new Contacts
+                // Create new contacts and add them to the profile
+                var contact1 = new Contact
                 {
                     Name = "Alice",
-                    ProfilePicture = "alice_picture.jpg",
-                    Profile = profile
+                    ProfilePicture = "alice_picture.jpg"
                 };
-
-                var contact2 = new Contacts
+                var contact2 = new Contact
                 {
                     Name = "Bob",
-                    ProfilePicture = "bob_picture.jpg",
-                    Profile = profile
+                    ProfilePicture = "bob_picture.jpg"
                 };
-
-                var contact3 = new Contacts
+                var contact3 = new Contact
                 {
                     Name = "Eve",
-                    ProfilePicture = "eve_picture.jpg",
-                    Profile = profile
+                    ProfilePicture = "eve_picture.jpg"
                 };
 
-                profile.Contacts.Add(contact1);
-                profile.Contacts.Add(contact2);
-                profile.Contacts.Add(contact3);
-
-                db.Users.Add(user);
-                db.Profiles.Add(profile);
-                db.Contacts.Add(contact1);
-                db.Contacts.Add(contact2);
-                db.Contacts.Add(contact3);
-
-                db.SaveChanges();
+                ChatAppManager.AddContactFromDB(profile, contact1);
+                ChatAppManager.AddContactFromDB(profile, contact2);
+                ChatAppManager.AddContactFromDB(profile, contact3);
 
                 Console.WriteLine("Database created successfully!");
             }
+
+
+           
         }
     }
 }

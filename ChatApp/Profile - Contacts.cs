@@ -4,98 +4,137 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Data.Entity;
+using System.Data.Entity.ModelConfiguration;
+using ChatApp.Frames;
+using System.Windows;
+
 namespace ChatApp
 {
-    public class User
-    {
-        public int Id { get; set; }
-        public string Username { get; set; }
-        public string Password { get; set; }
-        public List<Profile> Profiles { get; set; }
-
-        public User()
-        {
-            Profiles = new List<Profile>();
-        }
-    }
-
     public class Profile
     {
         public int Id { get; set; }
         public string Name { get; set; }
         public string Surname { get; set; }
-        public string BIO { get; set; }
+        public string Bio { get; set; }
         public string ProfilePicture { get; set; }
-        public int UserId { get; set; }
-        public User User { get; set; }
-        public virtual ICollection<Contacts> Contacts { get; set; }
+        public virtual ICollection<Contact> Contacts { get; set; }
 
         public Profile()
         {
-            Contacts = new List<Contacts>();
+            Contacts = new List<Contact>();
         }
     }
 
-    public class ChatMessageV2
-    {
-        public int Id { get; set; }
-        public int ContactId { get; set; }
-        public string Message { get; set; }
-        public DateTime Timestamp { get; set; }
-        public virtual Contacts Contact { get; set; }
-    }
-
-    public class Contacts
+    public class Contact
     {
         public int Id { get; set; }
         public string Name { get; set; }
         public string ProfilePicture { get; set; }
         public int ProfileId { get; set; }
         public virtual Profile Profile { get; set; }
-        public int RelatedContactId { get; set; }
-        public virtual Profile RelatedContact { get; set; }
-        public virtual ICollection<ChatMessageV2> ChatMessages { get; set; }
+        public virtual ICollection<ChatMessage> ChatMessages { get; set; }
 
-        public Contacts()
+        public Contact()
         {
-            ChatMessages = new List<ChatMessageV2>();
+            ChatMessages = new List<ChatMessage>();
         }
     }
 
-    public class ContactsData : DbContext
+    public class ChatMessage
     {
-        public ContactsData() : base("ChatApp")
+        public int Id { get; set; }
+        public int ContactId { get; set; }
+        public string MessageText { get; set; }
+        public DateTime MessageTimestamp { get; set; }
+        public virtual Contact Contact { get; set; }
+    }
+
+    public class ChatAppContext : DbContext
+    {
+        public ChatAppContext() : base("ChatApp")
         {
         }
 
-        public DbSet<User> Users { get; set; }
         public DbSet<Profile> Profiles { get; set; }
-        public DbSet<Contacts> Contacts { get; set; }
-        public DbSet<ChatMessageV2> ChatMessages { get; set; }
+        public DbSet<Contact> Contacts { get; set; }
+        public DbSet<ChatMessage> ChatMessages { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Profile>()
-                .HasRequired(p => p.User)
-                .WithMany(u => u.Profiles)
-                .HasForeignKey(p => p.UserId);
+            modelBuilder.Configurations.Add(new ProfileConfiguration());
+            modelBuilder.Configurations.Add(new ContactConfiguration());
+            modelBuilder.Configurations.Add(new ChatMessageConfiguration());
+        }
+    }
 
-            modelBuilder.Entity<Contacts>()
-                .HasRequired(c => c.RelatedContact)
-                .WithMany()
-                .HasForeignKey(c => c.RelatedContactId)
-                .WillCascadeOnDelete(false);
+    public class ProfileConfiguration : EntityTypeConfiguration<Profile>
+    {
+        public ProfileConfiguration()
+        {
+            HasKey(p => p.Id);
+            HasMany(p => p.Contacts)
+                .WithRequired(c => c.Profile)
+                .HasForeignKey(c => c.ProfileId);
+        }
+    }
 
+    public class ContactConfiguration : EntityTypeConfiguration<Contact>
+    {
+        public ContactConfiguration()
+        {
+            HasKey(c => c.Id);
+            HasRequired(c => c.Profile)
+                .WithMany(p => p.Contacts)
+                .HasForeignKey(c => c.ProfileId);
+        }
+    }
 
-            modelBuilder.Entity<Contacts>()
-                .HasRequired(c => c.RelatedContact)
-                .WithMany()
-                .HasForeignKey(c => c.RelatedContactId);
-
-            modelBuilder.Entity<ChatMessageV2>()
-                .HasRequired(cm => cm.Contact)
+    public class ChatMessageConfiguration : EntityTypeConfiguration<ChatMessage>
+    {
+        public ChatMessageConfiguration()
+        {
+            HasKey(cm => cm.Id);
+            HasRequired(cm => cm.Contact)
                 .WithMany(c => c.ChatMessages)
                 .HasForeignKey(cm => cm.ContactId);
         }
+    }
+
+    public static class ChatAppManager
+    {
+        public static void AddContactFromDB(Profile profile, Contact contact)
+        {
+            using (var context = new ChatAppContext())
+            {
+                profile.Contacts.Add(contact);
+                contact.Profile = profile;
+                context.Contacts.Add(contact);
+                context.SaveChanges();
+            }
+        }
+        public static void AddContact(Profile profile, Contact contact)
+        {
+            using (var context = new ChatAppContext())
+            {
+
+                var newProfile = new Profile
+                {
+                    Name = profile.Name,
+                    Surname = profile.Surname,
+                    Bio = profile.Bio,
+                    ProfilePicture = profile.ProfilePicture
+                };
+                newProfile.Contacts.Add(contact);
+                contact.Profile = newProfile;
+
+
+                context.Profiles.Add(newProfile);
+                context.Contacts.Add(contact);
+                context.SaveChanges();
+                (Application.Current.MainWindow as MainFrame)?.RefreshContactsList();
+
+            }
+        }
+
     }
 }

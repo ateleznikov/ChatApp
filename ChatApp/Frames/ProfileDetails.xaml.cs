@@ -23,30 +23,27 @@ namespace ChatApp.Frames
 
     public partial class ProfileDetails : Page
     {
-        private ContactsData db = new ContactsData();
+        private ChatAppContext db;
 
         public ProfileDetails()
         {
             InitializeComponent();
+            db = new ChatAppContext();
             LoadProfileData();
         }
 
         private void LoadProfileData()
         {
             int profileId = 1;
-
-            var profile = db.Profiles
-                .Include(p => p.User)
-                .FirstOrDefault(p => p.Id == profileId);
+            var profile = db.Profiles.FirstOrDefault(p => p.Id == profileId);
 
             if (profile != null)
             {
-                ImageBlock.Source = new BitmapImage(new Uri(profile.ProfilePicture, UriKind.RelativeOrAbsolute));
+                ImageBlock.Source = new BitmapImage(new System.Uri(profile.ProfilePicture, System.UriKind.RelativeOrAbsolute));
                 NameBlock.Text = profile.Name;
                 SurnameBlock.Text = profile.Surname;
-                BioBlock.Text = profile.BIO;
+                BioBlock.Text = profile.Bio;
             }
         }
-
     }
 }
