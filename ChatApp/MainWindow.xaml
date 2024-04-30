@@ -10,7 +10,7 @@
     <Window.Resources>
         <ResourceDictionary Source="Styles\styles.xaml"/>
     </Window.Resources>
-    <Grid>
+    <Grid Background="#d2d2d5">
 
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="115"/>
@@ -31,8 +31,20 @@
             <Button x:Name="ProfileButton" Content="&#x1F464;" Grid.Row="2" Style="{StaticResource MenuButton}" Click="Profile"/>
             <Image Grid.Row="0" Source="{Binding ProfilePicture}" Width="100" Height="100" Margin="0,5"/>
         </Grid>
+        <TextBlock Grid.Column="1" Text="Welcome to Chat App!" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+        <Frame x:Name="Pages" 
+           Grid.Column="2" 
+           NavigationUIVisibility="Hidden">
 
-        <Frame x:Name="Pages" Grid.Column="2" NavigationUIVisibility="Hidden"/>
+            <Frame.Resources>
+                <ResourceDictionary>
+                    <ResourceDictionary.MergedDictionaries>
+                        <ResourceDictionary Source="Styles\styles.xaml" />
+                    </ResourceDictionary.MergedDictionaries>
+                </ResourceDictionary>
+            </Frame.Resources>
+
+        </Frame>
 
     </Grid>
 </Window>

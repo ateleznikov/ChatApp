@@ -15,14 +15,12 @@ namespace DBCreation
         {
             using (var db = new ContactsData())
             {
-                // Create a new user
                 var user = new User
                 {
                     Username = "john_doe",
                     Password = "password"
                 };
 
-                // Create a new profile
                 var profile = new Profile
                 {
                     Name = "John",
@@ -32,7 +30,6 @@ namespace DBCreation
                     User = user
                 };
 
-                // Create three contacts
                 var contact1 = new Contacts
                 {
                     Name = "Alice",
@@ -54,19 +51,16 @@ namespace DBCreation
                     Profile = profile
                 };
 
-                // Add the contacts to the profile
                 profile.Contacts.Add(contact1);
                 profile.Contacts.Add(contact2);
                 profile.Contacts.Add(contact3);
 
-                // Add the user, profile, and contacts to the database
                 db.Users.Add(user);
                 db.Profiles.Add(profile);
                 db.Contacts.Add(contact1);
                 db.Contacts.Add(contact2);
                 db.Contacts.Add(contact3);
 
-                // Save changes to the database
                 db.SaveChanges();
 
                 Console.WriteLine("Database created successfully!");

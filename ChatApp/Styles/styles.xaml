@@ -27,4 +27,23 @@
         </Style.Resources>
     </Style>
 
+    <DataTemplate x:Key="ContactTemplate">
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+
+            <Image Grid.Column="0" 
+                   Source="{Binding ProfilePicture}"
+                   Width="50" Height="50"
+                   Margin="5" />
+
+            <TextBlock Grid.Column="1"
+                       Text="{Binding Name}"
+                       VerticalAlignment="Center"
+                       FontSize="16"
+                       Margin="5" />
+        </Grid>
+    </DataTemplate>
 </ResourceDictionary>
