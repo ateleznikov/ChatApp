@@ -14,101 +14,127 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.IO;
+using System.Data.Entity;
+using System.Runtime.Remoting.Contexts;
 
 namespace ChatApp.Frames
 {
-    /// <summary>
-    /// Interaction logic for MainFrame.xaml
-    /// </summary>
     public partial class MainFrame : Page
     {
+        private ChatAppContext db;
+
         public MainFrame()
         {
             InitializeComponent();
+            db = new ChatAppContext();
+            LoadContacts();
             LoadChatHistory();
-
         }
-        private const string ChatFilePath = "C:\\ATU\\vs files\\ChatApp\\ChatApp\\history.txt";
 
-        public void LoadChatHistory()
+        private void ContactsListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (File.Exists(ChatFilePath))
+            LoadChatHistory();
+        }
+
+        private void LoadContacts()
+        {
+            var contacts = db.Contacts.OrderBy(c => c.Name).ToList();
+            ContactsListBox.ItemsSource = contacts;
+        }
+
+        private void LoadChatHistory()
+        {
+            Console.WriteLine("LoadChatHistory called");
+
+            ChatListBox.Items.Clear();
+
+            var selectedContact = (Contact)ContactsListBox.SelectedItem;
+            if (selectedContact == null)
             {
-                string[] lines = File.ReadAllLines(ChatFilePath);
-                foreach (string line in lines)
-                {
-                    string[] parts = line.Split(new[] { "] " }, 2, StringSplitOptions.None);
-                    if (parts.Length == 2)
-                    {
-                        string timestampString = parts[0].TrimStart('[');
-                        string message = parts[1];
-
-                        if (DateTime.TryParseExact(timestampString, "HH:mm", CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime timestamp))
-                        {
-                            ChatMessage chatMessage = new ChatMessage
-                            {
-                                Timestamp = timestamp,
-                                Message = message
-                            };
-
-                            ChatListBox.Items.Add(chatMessage);
-                        }
-                    }
-                }
+                Console.WriteLine("No contact selected");
+                return;
             }
+
+            var chatMessages = db.ChatMessages
+                .Where(cm => cm.ContactId == selectedContact.Id)
+                .OrderBy(cm => cm.MessageTimestamp)
+                .ToList();
+
+            foreach (var chatMessage in chatMessages)
+            {
+                ChatListBox.Items.Add(chatMessage);
+            }
+
             if (ChatListBox.Items.Count > 0)
             {
                 object lastItem = ChatListBox.Items[ChatListBox.Items.Count - 1];
                 ChatListBox.ScrollIntoView(lastItem);
             }
         }
+
 
         private void SendButton_Click(object sender, RoutedEventArgs e)
         {
             SendMessage();
         }
 
-        private void ChatInputTextBox_KeyDown(object sender, KeyEventArgs e)
+        private void ChatInputTextBox_KeyDown(object sender, System.Windows.Input.KeyEventArgs e)
         {
-            if (e.Key == Key.Enter && Keyboard.Modifiers == ModifierKeys.Shift)
+            if (e.Key == System.Windows.Input.Key.Enter && Keyboard.Modifiers == System.Windows.Input.ModifierKeys.Shift)
             {
                 ChatInputTextBox.Text += Environment.NewLine;
                 ChatInputTextBox.CaretIndex = ChatInputTextBox.Text.Length;
                 e.Handled = true;
             }
-            else if (e.Key == Key.Enter)
+            else if (e.Key == System.Windows.Input.Key.Enter)
             {
                 SendMessage();
             }
         }
 
-        public void SendMessage()
+        private void SendMessage()
         {
-
-
             string message = ChatInputTextBox.Text.Trim();
             DateTime now = DateTime.Now;
-            ChatMessage chatMessage = new ChatMessage
+
+            var selectedContact = (Contact)ContactsListBox.SelectedItem;
+            if (selectedContact == null)
             {
-                Timestamp = now,
-                Message = message
-            };
-            if (string.IsNullOrWhiteSpace(message))
-            {
-                // Does not allow to send empty messages and spaces
+                MessageBox.Show("Please select a contact.");
                 return;
             }
-            File.AppendAllText(ChatFilePath, chatMessage.ToString() + Environment.NewLine);
+
+            if (string.IsNullOrWhiteSpace(message))
+                return;
+
+            var chatMessage = new ChatMessage
+            {
+                ContactId = selectedContact.Id,
+                MessageText = message,
+                MessageTimestamp = now
+            };
+
+            db.ChatMessages.Add(chatMessage);
+            db.SaveChanges();
+
             ChatListBox.Items.Add(chatMessage);
             ChatInputTextBox.Clear();
+
             if (ChatListBox.Items.Count > 0)
             {
-                // This if scrolls to the bottom of the Lisbox when the new message is added
                 object lastItem = ChatListBox.Items[ChatListBox.Items.Count - 1];
                 ChatListBox.ScrollIntoView(lastItem);
             }
         }
-        
-
+        void OpenNewContactWindow(object sender, RoutedEventArgs e)
+        {
+            var newContactWindow = new NewContactWindow(this);
+            newContactWindow.ShowDialog();
+        }
+        public void RefreshContactsList()
+        {
+            var contacts = db.Contacts.OrderBy(c => c.Name).ToList();
+            ContactsListBox.ItemsSource = contacts;
+        }
     }
 }
