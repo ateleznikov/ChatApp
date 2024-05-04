@@ -38,7 +38,7 @@ namespace ChatApp.Frames
 
         private void LoadContacts()
         {
-            var contacts = db.Contacts.ToList();
+            var contacts = db.Contacts.OrderBy(c => c.Name).ToList();
             ContactsListBox.ItemsSource = contacts;
         }
 
@@ -133,7 +133,7 @@ namespace ChatApp.Frames
         }
         public void RefreshContactsList()
         {
-            var contacts = db.Contacts.ToList();
+            var contacts = db.Contacts.OrderBy(c => c.Name).ToList();
             ContactsListBox.ItemsSource = contacts;
         }
     }
