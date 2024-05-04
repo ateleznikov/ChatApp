@@ -18,27 +18,27 @@ namespace DBCreation
             {
                 var profile = new Profile
                 {
-                    Name = "John",
-                    Surname = "Doe",
-                    Bio = "Hello, I'm John Doe!",
-                    ProfilePicture = "profile_picture.jpg"
+                    Name = "Anton",
+                    Surname = "Teleznikov",
+                    Bio = "Hello, I'm Anton Teleznikov!",
+                    ProfilePicture = "../images/profile-picture.jpg"
                 };
 
                 // Create new contacts and add them to the profile
                 var contact1 = new Contact
                 {
                     Name = "Alice",
-                    ProfilePicture = "alice_picture.jpg"
+                    ProfilePicture = "../images/alice.jpg"
                 };
                 var contact2 = new Contact
                 {
                     Name = "Bob",
-                    ProfilePicture = "bob_picture.jpg"
+                    ProfilePicture = "../images/bob.jpg"
                 };
                 var contact3 = new Contact
                 {
                     Name = "Eve",
-                    ProfilePicture = "eve_picture.jpg"
+                    ProfilePicture = "../images/eve.jpg"
                 };
 
                 ChatAppManager.AddContactFromDB(profile, contact1);

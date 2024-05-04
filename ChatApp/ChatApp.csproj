@@ -202,10 +202,12 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="history.txt" />
+    <Resource Include="images\profile-picture.jpg" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="images\profile-picture.jpg" />
+    <Resource Include="images\alice.jpg" />
+    <Resource Include="images\bob.jpg" />
+    <Resource Include="images\eve.jpg" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\MaterialDesignThemes.4.9.0\build\MaterialDesignThemes.targets" Condition="Exists('..\packages\MaterialDesignThemes.4.9.0\build\MaterialDesignThemes.targets')" />

@@ -13,10 +13,13 @@ namespace ChatApp.Frames
     public partial class NewContactWindow : Window
     {
         private ChatAppContext db;
-        public NewContactWindow()
+        private MainFrame mainFrame;
+
+        public NewContactWindow(MainFrame mainFrame)
         {
             InitializeComponent();
             db = new ChatAppContext();
+            this.mainFrame = mainFrame;
         }
 
         private void SaveButton_Click(object sender, RoutedEventArgs e)
@@ -38,6 +41,7 @@ namespace ChatApp.Frames
             };
 
             ChatAppManager.AddContact(profile, newContact);
+            mainFrame.RefreshContactsList();
             this.Close();
         }
 

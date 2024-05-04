@@ -128,10 +128,10 @@ namespace ChatApp.Frames
         }
         void OpenNewContactWindow(object sender, RoutedEventArgs e)
         {
-            var newContactWindow = new NewContactWindow();
+            var newContactWindow = new NewContactWindow(this);
             newContactWindow.ShowDialog();
         }
-        private void RefreshContactsList()
+        public void RefreshContactsList()
         {
             var contacts = db.Contacts.ToList();
             ContactsListBox.ItemsSource = contacts;

@@ -106,9 +106,19 @@ namespace ChatApp
         {
             using (var context = new ChatAppContext())
             {
+                var existingProfile = context.Profiles.Find(profile.Id);
+                if (existingProfile == null)
+                {
+                    context.Profiles.Add(profile);
+                }
+                else
+                {
+                    context.Profiles.Attach(existingProfile);
+                    profile = existingProfile;
+                }
+
                 profile.Contacts.Add(contact);
                 contact.Profile = profile;
-                context.Contacts.Add(contact);
                 context.SaveChanges();
             }
         }
@@ -131,7 +141,6 @@ namespace ChatApp
                 context.Profiles.Add(newProfile);
                 context.Contacts.Add(contact);
                 context.SaveChanges();
-                (Application.Current.MainWindow as MainFrame)?.RefreshContactsList();
 
             }
         }
